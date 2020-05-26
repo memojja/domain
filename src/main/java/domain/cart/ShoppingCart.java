@@ -1,10 +1,13 @@
 package domain.cart;
 
-import domain.discount.Campaign;
-import domain.discount.Coupon;
+import domain.delivery.DeliveryCostCalculator;
+import domain.delivery.FixedDeliveryCostCalculator;
+import domain.discount.campaign.Campaign;
+import domain.discount.coupon.Coupon;
 import domain.core.Category;
 import domain.core.Product;
 import domain.core.ProductQuantityHolder;
+import domain.discount.coupon.CouponService;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,13 +16,21 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
 
     //TODO key will be domain.product id
     private Map<Product, ProductQuantityHolder> products;
+    private DeliveryCostCalculator deliveryCostCalculator;
+
+    //TODO think about cohesion...
     private double campaignDiscount;
     private double couponDiscount;
 
     public ShoppingCart(){
         products = new HashMap<>();
+        deliveryCostCalculator = new FixedDeliveryCostCalculator( 2.99,2.0, 3.0);
     }
 
+    public ShoppingCart(DeliveryCostCalculator deliveryCostCalculator){
+        products = new HashMap<>();
+        deliveryCostCalculator = deliveryCostCalculator;
+    }
 
     public void addItem(Product product,int amount){
         ProductQuantityHolder productQuantityHolder = products.get(product);
@@ -39,7 +50,6 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
         return Collections.unmodifiableMap(products);
     }
 
-
     public long getNumberOfDeliveries() {
         return getCategories().size();
     }
@@ -48,7 +58,7 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
         return products.size();
     }
 
-    private Set<Category> getCategories(){
+    public Set<Category> getCategories(){
         return products.values().stream()
                 .map(productQuantityHolder -> productQuantityHolder.getProduct().getCategory())
                 .collect(Collectors.toSet());
@@ -60,7 +70,39 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
     }
 
     @Override
+    public double getCouponDiscount() {
+        return couponDiscount;
+    }
+
+    @Override
     public void applyDiscounts(Campaign... campaigns) {
 
     }
+
+    @Override
+    public double getCampaingDiscount() {
+        return campaignDiscount;
+    }
+
+    public double getTotalAmountsAfterDiscount(){
+        return Math.max(0,getTotalProductPrice()-campaignDiscount-couponDiscount);
+    }
+
+    private double getTotalProductPrice() {
+        return products.values().stream()
+                .mapToDouble(holder -> holder.getProduct().getPrice() * holder.getQuantity().get())
+                .sum();
+    }
+
+    public double getDeliveryCost() {
+        return deliveryCostCalculator.calculateFor(this);
+    }
+
+    public Set<ProductQuantityHolder> getProductsInCategory(Category category){
+        return products.values().stream()
+                .filter(productQuantityHolder -> productQuantityHolder.getProduct().getCategory().equals(category) ||
+                        productQuantityHolder.getProduct().getCategory().isParentCategory(category))
+                .collect(Collectors.toSet());
+    }
+
 }

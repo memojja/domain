@@ -2,8 +2,7 @@ package domain.discount;
 
 import domain.cart.ShoppingCart;
 import domain.core.Category;
-import domain.discount.Campaign;
-import domain.discount.DiscountType;
+import domain.discount.campaign.Campaign;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
