@@ -11,18 +11,18 @@ public class Campaign {
     private Double discount;
     private int minimumProductAmount;
     private DiscountType type;
-    private DiscountCalculator discountCalculator;
+    private CampaignDiscountCalculator campaignDiscountCalculator;
 
     public Campaign(Category category, Double discount, int minimumProductAmount, DiscountType type) {
         this.category = category;
         this.discount = discount;
         this.minimumProductAmount = minimumProductAmount;
         this.type = type;
-        discountCalculator = DiscountCalculatorFactory.getCampaignDiscountCalculator(type);
+        campaignDiscountCalculator = DiscountCalculatorFactory.getCampaignDiscountCalculator(type);
     }
 
     public double calculateDiscount(ShoppingCart shoppingCart) {
-        return this.discountCalculator.calculate(this,shoppingCart);
+        return this.campaignDiscountCalculator.calculate(this,shoppingCart);
     }
 
 }

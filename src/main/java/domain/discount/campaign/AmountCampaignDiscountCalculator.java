@@ -5,7 +5,7 @@ import domain.core.ProductQuantityHolder;
 
 import java.util.Set;
 
-public class AmountCampaignDiscountCalculator implements DiscountCalculator, IsCampaignApplicable {
+public class AmountCampaignDiscountCalculator implements CampaignDiscountCalculator, IsCampaignApplicable {
 
     @Override
     public double calculate(Campaign campaign, ShoppingCart shoppingCart) {

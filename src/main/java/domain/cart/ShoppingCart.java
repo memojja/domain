@@ -7,7 +7,6 @@ import domain.discount.coupon.Coupon;
 import domain.core.Category;
 import domain.core.Product;
 import domain.core.ProductQuantityHolder;
-import domain.discount.coupon.CouponService;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -88,7 +87,7 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
         return Math.max(0,getTotalProductPrice()-campaignDiscount-couponDiscount);
     }
 
-    private double getTotalProductPrice() {
+    public double getTotalProductPrice() {
         return products.values().stream()
                 .mapToDouble(holder -> holder.getProduct().getPrice() * holder.getQuantity().get())
                 .sum();

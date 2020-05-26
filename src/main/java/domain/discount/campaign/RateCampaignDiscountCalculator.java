@@ -5,7 +5,7 @@ import domain.core.ProductQuantityHolder;
 
 import java.util.Set;
 
-public class RateCampaignDiscountCalculator implements DiscountCalculator {
+public class RateCampaignDiscountCalculator implements CampaignDiscountCalculator {
     @Override
     public double calculate(Campaign campaign, ShoppingCart shoppingCart) {
         //TODO apply template pattern

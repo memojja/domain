@@ -4,7 +4,7 @@ import domain.discount.DiscountType;
 
 public class DiscountCalculatorFactory {
 
-    public static DiscountCalculator getCampaignDiscountCalculator(DiscountType discountType){
+    public static CampaignDiscountCalculator getCampaignDiscountCalculator(DiscountType discountType){
         if(DiscountType.RATE.equals(discountType)){
             return new RateCampaignDiscountCalculator();
         } else if(DiscountType.AMOUNT.equals(discountType)){
