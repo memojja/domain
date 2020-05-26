@@ -101,7 +101,7 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
     public Set<ProductQuantityHolder> getProductsInCategory(Category category){
         return products.values().stream()
                 .filter(productQuantityHolder -> productQuantityHolder.getProduct().getCategory().equals(category) ||
-                        productQuantityHolder.getProduct().getCategory().isParentCategory(category))
+                        Category.isCategoryFits(category,productQuantityHolder.getProduct().getCategory()))
                 .collect(Collectors.toSet());
     }
 

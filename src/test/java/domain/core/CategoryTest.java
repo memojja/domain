@@ -17,8 +17,8 @@ public class CategoryTest {
         clothes.setParent(skirts);
 
         //then
-        assertTrue(clothes.isParentCategory(skirts));
-        assertTrue(clothes.isParentCategory(skirts2));
-        assertFalse(clothes.isParentCategory(books));
+        assertTrue(Category.isCategoryFits(clothes,skirts));
+        assertTrue(Category.isCategoryFits(clothes,skirts2));
+        assertFalse(Category.isCategoryFits(clothes,books));
     }
 }

@@ -48,5 +48,11 @@ public class Category {
             return parent.isParentCategory(category);
         }
     }
+    public static boolean isCategoryFits(Category category,Category maybeParentCategory){
+        if(category.equals(maybeParentCategory)){
+            return true;
+        }
+        return category.isParentCategory(maybeParentCategory);
+    }
 
 }

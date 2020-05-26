@@ -16,8 +16,9 @@ public class ShoppingCartTest {
     public void givenAvailableProduct_whenAddCart_thenProductsQuantityIncrease(){
         //given
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product banana = new Product("Banana",5,new Category());
-        Product anotherBanana = new Product("Banana",5,new Category());
+        Category category = new Category();
+        Product banana = new Product("Banana",5,category);
+        Product anotherBanana = new Product("Banana",5,category);
 
         //when
         shoppingCart.addItem(banana,20);
