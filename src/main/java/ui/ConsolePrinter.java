@@ -1,14 +1,9 @@
 package ui;
 
 import domain.cart.ShoppingCart;
-import domain.core.Category;
 import domain.core.Product;
 import domain.core.ProductQuantityHolder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ConsolePrinter implements Printer {
@@ -19,9 +14,6 @@ public class ConsolePrinter implements Printer {
     public void print(ShoppingCart shoppingCart) {
         stringBuilder = new StringBuilder();
 
-        System.out.println(
-                );
-
         shoppingCart.getProducts().values().stream()
                 .collect(Collectors.groupingBy(productQuantityHolder -> productQuantityHolder.getProduct().getCategory()))
                 .forEach((category, productQuantityHolders) ->  {
@@ -31,11 +23,8 @@ public class ConsolePrinter implements Printer {
                             .forEach(this::toString);
                 });
 
-
-
-
-        stringBuilder.append("----------\n");
-        stringBuilder.append("Total Price ").append(shoppingCart.getTotalProductPrice()).append(" \t")
+        stringBuilder.append("----------\n")
+                .append("Total Price ").append(shoppingCart.getTotalProductPrice()).append(" \t")
                 .append("Total Discounted ").append(shoppingCart.getTotalAmountsAfterDiscount()).append(" \t")
                 .append("Delivery Cost ").append(shoppingCart.getDeliveryCost());
 
@@ -44,7 +33,7 @@ public class ConsolePrinter implements Printer {
 
     }
 
-    public void toString(ProductQuantityHolder holder){
+    private void toString(ProductQuantityHolder holder){
         Product product = holder.getProduct();
         stringBuilder.append(String.format("Product: %s\t",product.getTitle()))
                 .append(String.format("Quantity: %d\t",holder.getQuantity().get()))

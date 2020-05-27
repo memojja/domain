@@ -64,7 +64,7 @@ public class ShoppingCartIT {
         shoppingCart.applyDiscounts(campaign,campaign2,campaign3);
 
         //then
-        assertEquals(10,shoppingCart.getCampaingDiscount()); //TODO
+        assertEquals(10,shoppingCart.getCampaingDiscount());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ShoppingCartIT {
         shoppingCart.applyCoupon(coupon);
 
         //then
-        assertEquals(shoppingCart.getCouponDiscount(),5); //TODO
+        assertEquals(shoppingCart.getCouponDiscount(),5);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class ShoppingCartIT {
         shoppingCart.applyCoupon(coupon);
 
         //then
-        assertEquals(shoppingCart.getCouponDiscount(),0.15); //TODO
+        assertEquals(shoppingCart.getCouponDiscount(),0.15);
     }
 
 
