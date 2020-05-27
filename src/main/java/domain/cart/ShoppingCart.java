@@ -7,6 +7,8 @@ import domain.discount.coupon.Coupon;
 import domain.core.Category;
 import domain.core.Product;
 import domain.core.ProductQuantityHolder;
+import ui.ConsolePrinter;
+import ui.Printer;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,10 +19,12 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
     private Map<Product, ProductQuantityHolder> products;
     private DeliveryCostCalculator deliveryCostCalculator;
 
+
     //TODO think about cohesion...
     private double campaignDiscount;
     private double couponDiscount;
 
+    private static Printer printer;
     private double totalCost = 0.0;
 
     public ShoppingCart(){
@@ -87,6 +91,15 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
     }
 
     @Override
+    public void applyDiscounts(List<Campaign> campaigns) {
+        this.campaignDiscount =  campaigns.stream()
+                .mapToDouble(campaign -> campaign.calculateDiscount(this))
+                .filter(discount -> getTotalProductPrice() >= discount)
+                .max()
+                .getAsDouble();
+    }
+
+    @Override
     public double getCampaingDiscount() {
         return campaignDiscount;
     }
@@ -112,4 +125,14 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
                 .collect(Collectors.toSet());
     }
 
+    public void print() {
+        if(printer == null)
+            printer = new ConsolePrinter();
+
+        printer.print(this);
+    }
+
+    public static void setPrinter(Printer printer) {
+        ShoppingCart.printer = printer;
+    }
 }
