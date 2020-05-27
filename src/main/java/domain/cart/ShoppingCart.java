@@ -21,6 +21,8 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
     private double campaignDiscount;
     private double couponDiscount;
 
+    private double totalCost = 0.0;
+
     public ShoppingCart(){
         products = new HashMap<>();
         deliveryCostCalculator = new FixedDeliveryCostCalculator( 2.99,2.0, 3.0);
@@ -28,7 +30,7 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
 
     public ShoppingCart(DeliveryCostCalculator deliveryCostCalculator){
         products = new HashMap<>();
-        deliveryCostCalculator = deliveryCostCalculator;
+        this.deliveryCostCalculator = deliveryCostCalculator;
     }
 
     public void addItem(Product product,int amount){
@@ -79,6 +81,7 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
     public void applyDiscounts(Campaign... campaigns) {
         this.campaignDiscount =  Arrays.stream(campaigns)
                 .mapToDouble(campaign -> campaign.calculateDiscount(this))
+                .filter(discount -> getTotalProductPrice() >= discount)
                 .max()
                 .getAsDouble();
     }

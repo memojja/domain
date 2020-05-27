@@ -56,7 +56,7 @@ public class ShoppingCartIT {
         Category foodCategory = new Category("Foods");
 
         Campaign campaign = new Campaign(foodCategory,5.0,1, DiscountType.RATE);
-        Campaign campaign2 = new Campaign(foodCategory,10.0,1, DiscountType.RATE);
+        Campaign campaign2 = new Campaign(foodCategory,10.0,1, DiscountType.AMOUNT);
         Campaign campaign3 = new Campaign(foodCategory,50.0,1, DiscountType.AMOUNT);
 
         //when
@@ -64,7 +64,7 @@ public class ShoppingCartIT {
         shoppingCart.applyDiscounts(campaign,campaign2,campaign3);
 
         //then
-        assertEquals(5,shoppingCart.getCampaingDiscount()); //TODO
+        assertEquals(10,shoppingCart.getCampaingDiscount()); //TODO
     }
 
     @Test
