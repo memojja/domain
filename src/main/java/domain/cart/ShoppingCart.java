@@ -54,7 +54,9 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
     }
 
     public long getNumberOfProducts() {
-        return products.size();
+        return products.values().stream()
+                .mapToInt(holder -> holder.getQuantity().get())
+                .sum();
     }
 
     public Set<Category> getCategories(){
@@ -65,12 +67,12 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
 
     @Override
     public void applyCoupon(Coupon coupon) {
-
+        this.couponDiscount = coupon.calculateDiscount(this);
     }
 
     @Override
     public double getCouponDiscount() {
-        return couponDiscount;
+        return this.couponDiscount;
     }
 
     @Override

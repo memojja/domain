@@ -1,12 +1,12 @@
-package domain.discount;
+package domain.discount.coupon;
 
 import domain.cart.ShoppingCart;
 import domain.core.Category;
 import domain.core.Product;
-import domain.discount.campaign.AmountCampaignDiscountCalculator;
+import domain.discount.DiscountType;
 import domain.discount.campaign.Campaign;
 import domain.discount.campaign.CampaignDiscountCalculator;
-import domain.discount.coupon.AmountCouponDiscountCalculator;
+import domain.discount.campaign.RateCampaignDiscountCalculator;
 import domain.discount.coupon.Coupon;
 import domain.discount.coupon.CouponDiscountCalculator;
 import domain.discount.coupon.RateCouponDiscountCalculator;
@@ -14,13 +14,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AmountCouponDiscountCalculatorTest {
+public class RateCouponDiscountCalculatorTest {
     @Test
     public void givenTwoProduct_whenApplyCoupon_thenDiscountMustBeOne(){
-        CouponDiscountCalculator couponDiscountCalculator = new AmountCouponDiscountCalculator();
+        CouponDiscountCalculator couponDiscountCalculator = new RateCouponDiscountCalculator();
 
         Category foods = new Category("Foods");
-        Coupon coupon = new Coupon(2,10.0,DiscountType.AMOUNT);
+        Coupon coupon = new Coupon(2,10.0, DiscountType.RATE);
         ShoppingCart shoppingCart = new ShoppingCart();
 
         Product apple = new Product("Apple",5.0,foods);
@@ -29,7 +29,7 @@ public class AmountCouponDiscountCalculatorTest {
         shoppingCart.applyCoupon(coupon);
         double discount = couponDiscountCalculator.calculate(coupon,shoppingCart);
 
-        assertEquals(discount,10.0);
+        assertEquals(discount,1.0);
     }
 
 }

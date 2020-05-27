@@ -1,23 +1,23 @@
-package domain.discount;
+package domain.discount.campaign;
 
 import domain.cart.ShoppingCart;
 import domain.core.Category;
 import domain.core.Product;
+import domain.discount.DiscountType;
+import domain.discount.campaign.AmountCampaignDiscountCalculator;
 import domain.discount.campaign.Campaign;
 import domain.discount.campaign.CampaignDiscountCalculator;
-import domain.discount.campaign.RateCampaignDiscountCalculator;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RateCampaignDiscountCalculatorTest {
-
+public class AmountCampaignDiscountCalculatorTest {
     @Test
     public void givenBelowMinimumProductAmount_whenApplyDiscounts_thenDiscountMustBeZero(){
-        CampaignDiscountCalculator campaignDiscountCalculator = new RateCampaignDiscountCalculator();
+        CampaignDiscountCalculator campaignDiscountCalculator = new AmountCampaignDiscountCalculator();
 
         Category foods = new Category("Foods");
-        Campaign campaign = new Campaign(foods,10.0,2,DiscountType.RATE);
+        Campaign campaign = new Campaign(foods,10.0,2, DiscountType.AMOUNT);
         ShoppingCart shoppingCart = new ShoppingCart();
 
         Product apple = new Product("Apple",5.0,foods);
@@ -31,10 +31,10 @@ public class RateCampaignDiscountCalculatorTest {
 
     @Test
     public void givenTwoProduct_whenApplyDiscounts_thenDiscountMustBeOne(){
-        CampaignDiscountCalculator campaignDiscountCalculator = new RateCampaignDiscountCalculator();
+        CampaignDiscountCalculator campaignDiscountCalculator = new AmountCampaignDiscountCalculator();
 
         Category foods = new Category("Foods");
-        Campaign campaign = new Campaign(foods,10.0,2,DiscountType.RATE);
+        Campaign campaign = new Campaign(foods,10.0,2,DiscountType.AMOUNT);
         ShoppingCart shoppingCart = new ShoppingCart();
 
         Product apple = new Product("Apple",5.0,foods);
@@ -43,17 +43,17 @@ public class RateCampaignDiscountCalculatorTest {
         shoppingCart.applyDiscounts(campaign);
         double discount = campaignDiscountCalculator.calculate(campaign,shoppingCart);
 
-        assertEquals(discount,1.0);
+        assertEquals(discount,10.0);
     }
 
     @Test
     public void givenCampaingToSubCategory_whenApplyDiscounts_thenDiscountMustBeOne(){
-        CampaignDiscountCalculator campaignDiscountCalculator = new RateCampaignDiscountCalculator();
+        CampaignDiscountCalculator campaignDiscountCalculator = new AmountCampaignDiscountCalculator();
 
         Category naturalFoods = new Category("Natural Foods");
         Category amasyaApples = new Category("Amasya Apples");
         naturalFoods.setParent(amasyaApples);
-        Campaign campaign = new Campaign(naturalFoods,10.0,2,DiscountType.RATE);
+        Campaign campaign = new Campaign(naturalFoods,10.0,2,DiscountType.AMOUNT);
         ShoppingCart shoppingCart = new ShoppingCart();
 
         Product apple = new Product("Apple",5.0,amasyaApples);
@@ -61,6 +61,6 @@ public class RateCampaignDiscountCalculatorTest {
         shoppingCart.applyDiscounts(campaign);
         double discount = campaignDiscountCalculator.calculate(campaign,shoppingCart);
 
-        assertEquals(discount,1.0);
+        assertEquals(discount,10.0);
     }
 }

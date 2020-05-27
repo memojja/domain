@@ -21,6 +21,6 @@ public class CampaignTest {
         shoppingCart.applyDiscounts(campaign,campaign2);
 
         //then
-
+        //TODO
     }
 }

@@ -1,7 +1,5 @@
 package domain.core;
 
-import domain.core.Category;
-import domain.core.Product;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
