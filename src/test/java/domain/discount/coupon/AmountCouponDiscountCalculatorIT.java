@@ -15,9 +15,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AmountCouponDiscountCalculatorTest {
+public class AmountCouponDiscountCalculatorIT {
     @Test
     public void givenTwoProduct_whenApplyCoupon_thenDiscountMustBeOne(){
+        //given
         CouponDiscountCalculator couponDiscountCalculator = new AmountCouponDiscountCalculator();
 
         Category foods = new Category("Foods");
@@ -28,8 +29,11 @@ public class AmountCouponDiscountCalculatorTest {
 
         shoppingCart.addItem(apple,2);
         shoppingCart.applyCoupon(coupon);
+
+        //when
         double discount = couponDiscountCalculator.calculate(coupon,shoppingCart);
 
+        //then
         assertEquals(discount,10.0);
     }
 

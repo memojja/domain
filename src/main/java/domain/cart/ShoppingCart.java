@@ -77,7 +77,10 @@ public class ShoppingCart implements CouponDiscountApplicable, CampainDiscountAp
 
     @Override
     public void applyDiscounts(Campaign... campaigns) {
-
+        this.campaignDiscount =  Arrays.stream(campaigns)
+                .mapToDouble(campaign -> campaign.calculateDiscount(this))
+                .max()
+                .getAsDouble();
     }
 
     @Override

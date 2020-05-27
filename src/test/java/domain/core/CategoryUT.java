@@ -4,7 +4,7 @@ import domain.core.Category;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CategoryTest {
+public class CategoryUT {
     @Test
     public void givenCategory_whenAddedSubCategory_thenSupported(){
         //given

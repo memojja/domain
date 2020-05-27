@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ShoppingCartTest {
+public class ShoppingCartIT {
 
     @Test
     public void givenAvailableProduct_whenAddCart_thenProductsQuantityIncrease(){
@@ -41,12 +41,30 @@ public class ShoppingCartTest {
         Campaign campaign3 = new Campaign(foodCategory,50.0,5, DiscountType.AMOUNT);
 
         //when
-        IntStream.range(1,3)
-                .forEach(i -> shoppingCart.addItem(new Product(String.valueOf(i),i,foodCategory),1));
+        shoppingCart.addItem(new Product("Apple",12,foodCategory),5);
+
         shoppingCart.applyDiscounts(campaign,campaign2,campaign3);
 
         //then
-        assertEquals(40,40); //TODO
+        assertEquals(shoppingCart.getCampaingDiscount(),50); //TODO
+    }
+
+    @Test
+    public void given2CampainOneIsAfterDiscountPriceNegative_whenApplyTheCart_thenRejectThisCampain(){
+        //given
+        ShoppingCart shoppingCart = new ShoppingCart();
+        Category foodCategory = new Category("Foods");
+
+        Campaign campaign = new Campaign(foodCategory,5.0,1, DiscountType.RATE);
+        Campaign campaign2 = new Campaign(foodCategory,10.0,1, DiscountType.RATE);
+        Campaign campaign3 = new Campaign(foodCategory,50.0,1, DiscountType.AMOUNT);
+
+        //when
+        shoppingCart.addItem(new Product("Apple",1,foodCategory),10);
+        shoppingCart.applyDiscounts(campaign,campaign2,campaign3);
+
+        //then
+        assertEquals(5,shoppingCart.getCampaingDiscount()); //TODO
     }
 
     @Test
@@ -82,4 +100,6 @@ public class ShoppingCartTest {
         //then
         assertEquals(shoppingCart.getCouponDiscount(),0.15); //TODO
     }
+
+
 }
