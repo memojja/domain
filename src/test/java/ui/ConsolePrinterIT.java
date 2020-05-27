@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class GUIPrinterIT {
+public class ConsolePrinterIT {
 
     @Test
-    public void integrationTest(){
+    public void givenShoppingCart_whenPrint_thenResultMustBeInConsole(){
         //given
         List<String> names = Arrays.asList("Foods","Clothes","Books");
 
